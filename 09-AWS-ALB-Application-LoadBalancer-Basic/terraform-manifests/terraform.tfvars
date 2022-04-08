@@ -1,7 +1,8 @@
 # Generic Variables
 aws_region = "us-east-1"
 environment = "stag"
-business_divsion = "hr"
+ # changed to lower case to avoid future issues
+business_divsion = "HR"
 
 
 

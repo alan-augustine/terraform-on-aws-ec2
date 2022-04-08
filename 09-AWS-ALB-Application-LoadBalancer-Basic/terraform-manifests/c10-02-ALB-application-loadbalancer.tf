@@ -1,7 +1,7 @@
 # Terraform AWS Application Load Balancer (ALB)
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "5.16.0"
+  version =  "6.8.0" 
 
   name = "${local.name}-alb"
   load_balancer_type = "application"
@@ -10,13 +10,16 @@ module "alb" {
     module.vpc.public_subnets[0],
     module.vpc.public_subnets[1]
   ]
-  security_groups = [module.loadbalancer_sg.this_security_group_id]
+  security_groups = [module.loadbalancer_sg.security_group_id]
   # Listeners
   http_tcp_listeners = [
     {
       port               = 80
       protocol           = "HTTP"
-      target_group_index = 0 # App1 TG associated to this listener
+      # App1 TG associated to this listener. 
+      # '0' is index 
+      # target_groups[0]
+      target_group_index = 0 
     }
   ]  
   # Target Groups
@@ -43,11 +46,11 @@ module "alb" {
       # App1 Target Group - Targets
       targets = {
         my_app1_vm1 = {
-          target_id = module.ec2_private.id[0]
+          target_id = module.ec2_private[0].id
           port      = 80
         },
         my_app1_vm2 = {
-          target_id = module.ec2_private.id[1]
+          target_id = module.ec2_private[1].id
           port      = 80
         }
       }
