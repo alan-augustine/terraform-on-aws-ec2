@@ -1,15 +1,15 @@
 # Terraform Block
 terraform {
-  required_version = "~> 1.1" # Means 1.1, 1.2, 1.3 etc. , but not 2.0 or 1.0
+  required_version = "~> 0.14" # which means any version equal & above 0.14 like 0.15, 0.16 etc and < 1.xx
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.6"
+      version = "~> 3.0"
     }
     null = {
       source = "hashicorp/null"
-      version = "~> 3.0"
-    }  
+      version = "~> 3.0.0"
+    }    
   }
 }
 

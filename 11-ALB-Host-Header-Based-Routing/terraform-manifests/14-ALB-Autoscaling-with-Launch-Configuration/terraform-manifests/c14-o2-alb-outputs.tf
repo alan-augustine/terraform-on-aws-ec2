@@ -1,27 +1,26 @@
-# Terraform AWS Application Load Balancer (ALB) Outputs
-output "lb_id" {
+output "this_lb_id" {
   description = "The ID and ARN of the load balancer we created."
-  value       = module.alb.lb_id
+  value       = module.alb.this_lb_id
 }
 
-output "lb_arn" {
+output "this_lb_arn" {
   description = "The ID and ARN of the load balancer we created."
-  value       = module.alb.lb_arn
+  value       = module.alb.this_lb_arn
 }
 
-output "lb_dns_name" {
+output "this_lb_dns_name" {
   description = "The DNS name of the load balancer."
-  value       = module.alb.lb_dns_name
+  value       = module.alb.this_lb_dns_name
 }
 
-output "lb_arn_suffix" {
+output "this_lb_arn_suffix" {
   description = "ARN suffix of our load balancer - can be used with CloudWatch."
-  value       = module.alb.lb_arn_suffix
+  value       = module.alb.this_lb_arn_suffix
 }
 
-output "lb_zone_id" {
+output "this_lb_zone_id" {
   description = "The zone_id of the load balancer to assist with creating DNS records."
-  value       = module.alb.lb_zone_id
+  value       = module.alb.this_lb_zone_id
 }
 
 output "http_tcp_listener_arns" {
@@ -57,9 +56,4 @@ output "target_group_arn_suffixes" {
 output "target_group_names" {
   description = "Name of the target group. Useful for passing to your CodeDeploy Deployment Group."
   value       = module.alb.target_group_names
-}
-
-output "target_group_attachments" {
-  description = "ARNs of the target group attachment IDs."
-  value       = module.alb.target_group_attachments
 }

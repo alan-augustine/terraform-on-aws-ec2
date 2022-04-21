@@ -1,4 +1,5 @@
-# Input Variables
+# Input Variables affecting whole code base
+# This my be overrided in other files
 # AWS Region
 variable "aws_region" {
   description = "Region in which AWS Resources to be created"
@@ -15,5 +16,5 @@ variable "environment" {
 variable "business_divsion" {
   description = "Business Division in the large organization this Infrastructure belongs"
   type = string
-  default = "sap"
+  default = "SAP"
 }
