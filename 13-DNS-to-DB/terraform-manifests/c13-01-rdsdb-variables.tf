@@ -1,5 +1,7 @@
 # Terraform AWS RDS Database Variables
 # Place holder file for AWS RDS Database
+# No default values are specified here
+# All values are defined in (overrided in) rdsdb.auto.tfvars
 
 # DB Name
 variable "db_name" {
@@ -22,5 +24,4 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
-
 

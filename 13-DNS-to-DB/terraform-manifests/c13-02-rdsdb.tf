@@ -1,12 +1,15 @@
 # Create AWS RDS Database
 module "rdsdb" {
   source  = "terraform-aws-modules/rds/aws"
-  #version = "2.34.0"
-  version = "3.0.0"
+  version = "4.2.0"
+
+  # To Fix Error - Error creating DB Instance: InvalidParameterCombination: The DB instance and EC2 security group are in different VPCs. 
+  db_subnet_group_name = module.vpc.database_subnet_group_name
   
+  # from rdsdb.auto.tfvars
   identifier = var.db_instance_identifier
 
-  name     = var.db_name  # Initial Database Name
+  db_name  = var.db_name  # Initial Database Name
   username = var.db_username
   password = var.db_password
   port     = 3306

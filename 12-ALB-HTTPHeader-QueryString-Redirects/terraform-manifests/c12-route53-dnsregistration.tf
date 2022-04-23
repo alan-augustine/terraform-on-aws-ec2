@@ -1,8 +1,7 @@
-# DNS Registration 
-## Default DNS
+# Default DNS Record Registration 
 resource "aws_route53_record" "default_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id 
-  name    = "myapps101.devopsincloud.com"
+  name    = "myapps101.devopsy.click"
   type    = "A"
   alias {
     name                   = module.alb.lb_dns_name
@@ -11,10 +10,10 @@ resource "aws_route53_record" "default_dns" {
   }  
 }
 
-## Testing Host Header - Redirect to External Site from ALB HTTPS Listener Rules
+# App1 DNS - ## Testing Host Header - Redirect to External Site from ALB HTTPS Listener Rules
 resource "aws_route53_record" "app1_dns" {
   zone_id = data.aws_route53_zone.mydomain.zone_id 
-  name    = "azure-aks101.devopsincloud.com"
+  name    = "azure-aks101.devopsy.click"
   type    = "A"
   alias {
     name                   = module.alb.lb_dns_name
@@ -22,4 +21,3 @@ resource "aws_route53_record" "app1_dns" {
     evaluate_target_health = true
   }  
 }
-

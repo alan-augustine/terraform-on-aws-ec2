@@ -1,4 +1,5 @@
-# VPC Input Variables
+# VPC Input Variables - variables specific to VPC
+# Some values are overrided in file vpc.auto.tfvars 
 
 # VPC Name
 variable "vpc_name" {
