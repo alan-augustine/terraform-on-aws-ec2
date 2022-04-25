@@ -18,7 +18,7 @@ module "ec2_public" {
   tags = local.common_tags
   # Since we need connectivity to internet via NAT Gateway to run 
   # instance_count = var.private_instance_count : this is not supported in new versions
-  user_data = file("${path.module}/app1-install.sh")
+  user_data = file("${path.module}/jumpbox-install.sh")
   depends_on = [module.vpc]
 
 }
