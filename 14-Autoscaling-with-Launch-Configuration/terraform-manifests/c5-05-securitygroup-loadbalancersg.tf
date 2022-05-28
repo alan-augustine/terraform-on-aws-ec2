@@ -1,29 +1,29 @@
-# Security Group for Public Load Balancer
+# classic load balancer
 module "loadbalancer_sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  #version = "3.18.0"
-  version = "4.0.0"
+  version = "4.9.0"
 
-  name = "loadbalancer-sg"
-  description = "Security Group with HTTP open for entire Internet (IPv4 CIDR), egress ports are all world open"
-  vpc_id = module.vpc.vpc_id
-  # Ingress Rules & CIDR Blocks
-  ingress_rules = ["http-80-tcp", "https-443-tcp"]
+  name        = "loadbalancer-sg"
+  description = "Security group for HTTP from internet"
+  vpc_id      = module.vpc.vpc_id
+
   ingress_cidr_blocks = ["0.0.0.0/0"]
-  # Egress Rule - all-all open
-  egress_rules = ["all-all"]
-  tags = local.common_tags
+  # there are a set of pre-defined rules
+  ingress_rules       = ["http-80-tcp" , "https-443-tcp"]
 
-  # Open to CIDRs blocks (rule or from_port+to_port+protocol+description)
   ingress_with_cidr_blocks = [
     {
       from_port   = 81
       to_port     = 81
-      protocol    = 6
-      description = "Allow Port 81 from internet"
+      protocol    = 6           # TCP
+      description = "Port 81"
       cidr_blocks = "0.0.0.0/0"
-    },
+    }
   ]
+
+  # note: Private EC2 instance SG will allow all connection from elements within VPC
+  egress_rules = ["all-all"]
+
+  tags = local.common_tags
+
 }
-
-

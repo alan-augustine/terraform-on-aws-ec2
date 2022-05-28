@@ -1,4 +1,5 @@
 # Define Local Values in Terraform
+# We can't refer to other variables, within a variable definition - but 'locals' can
 locals {
   owners = var.business_divsion
   environment = var.environment
@@ -8,8 +9,7 @@ locals {
     owners = local.owners
     environment = local.environment
   }
-
-  asg_tags = [
+    asg_tags = [
     {
       key                 = "Project"
       value               = "megasecret"
@@ -21,5 +21,5 @@ locals {
       propagate_at_launch = true
     },
   ]
-
 } 
+

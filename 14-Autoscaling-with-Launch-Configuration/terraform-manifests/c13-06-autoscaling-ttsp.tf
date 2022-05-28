@@ -7,6 +7,7 @@ resource "aws_autoscaling_policy" "avg_cpu_policy_greater_than_xx" {
   autoscaling_group_name = module.autoscaling.autoscaling_group_id
   estimated_instance_warmup = 180 # defaults to ASG default cooldown 300 seconds if not set
   # CPU Utilization is above 50
+  # below is 'target_tracking_configuration' block
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"

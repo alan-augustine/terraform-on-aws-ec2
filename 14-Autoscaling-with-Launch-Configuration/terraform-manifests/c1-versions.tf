@@ -1,19 +1,19 @@
 # Terraform Block
 terraform {
-  required_version = "~> 0.14" # which means any version equal & above 0.14 like 0.15, 0.16 etc and < 1.xx
+  required_version = "~> 1.1" # Means 1.1, 1.2, 1.3 etc. , but not 2.0 or 1.0
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.6"
     }
     null = {
       source = "hashicorp/null"
-      version = "~> 3.0.0"
-    }        
+      version = "~> 3.0"
+    }
     random = {
       source = "hashicorp/random"
-      version = "~> 3.0"
-    }       
+      version = "3.1.3"
+    }  
   }
 }
 
@@ -27,7 +27,8 @@ Note-1:  AWS Credentials Profile (profile = "default") configured on your local 
 $HOME/.aws/credentials
 */
 
-# Create Random Pet Resource
+## AWS Bug for SNS Topic: https://stackoverflow.com/questions/62694223/cloudwatch-alarm-pending-confirmation
+# Due to above issue, we created random resource
 resource "random_pet" "this" {
   length = 2
 }

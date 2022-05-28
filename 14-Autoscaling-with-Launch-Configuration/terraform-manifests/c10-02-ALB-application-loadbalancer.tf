@@ -1,8 +1,9 @@
 # Terraform AWS Application Load Balancer (ALB)
+# Ref: https://github.com/alan-augustine/terraform-on-aws-ec2/tree/main/14-Autoscaling-with-Launch-Configuration#step-05-c10-02-alb-application-loadbalancertf
+
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  #version = "5.16.0"
-  version = "6.0.0" 
+  version =  "6.8.0" 
 
   name = "${local.name}-alb"
   load_balancer_type = "application"
@@ -13,11 +14,11 @@ module "alb" {
     module.vpc.public_subnets[1]
   ]*/
   subnets = module.vpc.public_subnets
-  #security_groups = [module.loadbalancer_sg.this_security_group_id]
   security_groups = [module.loadbalancer_sg.security_group_id]
-  # Listeners
-  # HTTP Listener - HTTP to HTTPS Redirect
-    http_tcp_listeners = [
+  # Listeners:
+  # port 443 lister is defined seprately as 'https_listeners'
+  # port 80 lister is defined as 'http_tcp_listeners'
+  http_tcp_listeners = [
     {
       port               = 80
       protocol           = "HTTP"
@@ -50,28 +51,32 @@ module "alb" {
         matcher             = "200-399"
       }
       protocol_version = "HTTP1"
-     /* # App1 Target Group - Targets
-      targets = {
+      #Change: Commented the Targets for App1, App1 Targets now will be added automatically from ASG. 
+      # HOW? In ASG, we will be referencing the load balancer target_group_arns= module.alb.target_group_arns
+      # App1 Target Group - Targets
+      /* targets = {
         my_app1_vm1 = {
-          target_id = module.ec2_private_app1.id[0]
+          target_id = module.ec2_private_app1[0].id
           port      = 80
         },
         my_app1_vm2 = {
-          target_id = module.ec2_private_app1.id[1]
+          target_id = module.ec2_private_app1[1].id
           port      = 80
         }
-      }
-      tags =local.common_tags # Target Group Tags*/
-    },  
+      } */
+      tags =local.common_tags # Target Group Tags
+    }
+  # In this section for ASG, only App1 is used - no App2 or App3 , so deleted those compared to section 13 
   ]
-
   # HTTPS Listener
+  # Listeners:
+  # port 443 lister is defined  as 'https_listeners'
+  # port 80 lister is defined seprately as 'http_tcp_listeners'
   https_listeners = [
     # HTTPS Listener Index = 0 for HTTPS 443
     {
       port               = 443
       protocol           = "HTTPS"
-      #certificate_arn    = module.acm.this_acm_certificate_arn
       certificate_arn    = module.acm.acm_certificate_arn
       action_type = "fixed-response"
       fixed_response = {
@@ -82,7 +87,7 @@ module "alb" {
     }, 
   ]
 
-  # HTTPS Listener Rules
+  # HTTPS Listener Rules - based on path_patterns
   https_listener_rules = [
     # Rule-1: /app1* should go to App1 EC2 Instances
     { 
@@ -97,10 +102,7 @@ module "alb" {
       conditions = [{
         path_patterns = ["/*"]
       }]
-    },  
+    }  
   ]
   tags = local.common_tags # ALB Tags
 }
-
-
-
