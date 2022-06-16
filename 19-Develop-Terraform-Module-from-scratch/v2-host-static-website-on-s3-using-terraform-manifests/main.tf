@@ -25,6 +25,7 @@ EOF
     error_document = "error.html"
   }
   tags          = var.tags
+  # delete bucket even if non-empty
   force_destroy = true
 }
 
