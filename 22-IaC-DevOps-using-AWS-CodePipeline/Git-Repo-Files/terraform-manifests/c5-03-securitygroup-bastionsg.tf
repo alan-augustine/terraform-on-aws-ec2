@@ -3,9 +3,11 @@
 module "public_bastion_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   #version = "3.18.0"
-  version = "4.0.0"
+  version = "4.9.0"
 
   #name = "public-bastion-sg"  
+  # $local.name} = "${var.business_divsion}-${var.environment}"
+  # environment value --> from dev.tfvars and stag.tfvars
   name = "${local.name}-public-bastion-sg"
   description = "Security Group with SSH port open for everybody (IPv4 CIDR), egress ports are all world open"
   vpc_id = module.vpc.vpc_id

@@ -1,4 +1,7 @@
 # DNS Name Input Variable
+# specified in dev.tfvars & stag.tfvars
+# dev  - devdemo5.devopsy.click
+# stag - stagedemo5.devopsy.click
 variable "dns_name" {
   description = "DNS Name to support multiple environments"
   type = string   

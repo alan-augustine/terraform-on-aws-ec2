@@ -1,6 +1,7 @@
 # Define Local Values in Terraform
 locals {
   owners = var.business_divsion
+  # environment value --> from dev.tfvars and stag.tfvars
   environment = var.environment
   name = "${var.business_divsion}-${var.environment}"
   #name = "${local.owners}-${local.environment}"
